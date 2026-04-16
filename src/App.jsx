@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import PersonalInfo from './components/PersonalInfo'
-import Summary from './components/Summary'
-import ExperienceList from './components/Experience'
+import AboutMe from './components/AboutMe'
+import ExperienceList from './components/ExperienceList'
 import EducationList from './components/Education'
 import './App.css'
 
@@ -10,7 +10,7 @@ function App() {
     fullName: '',
     email: '',
     phone: '',
-    summary: '',
+    aboutMe: '',
     experience: [],
     education: [],
     skills: [],
@@ -40,30 +40,30 @@ function App() {
 
   return (
     <div>
-      <form>
-        <PersonalInfo CVdata={CVdata} handleInputChange={handleInputChange} />
-        <Summary CVdata={CVdata} handleInputChange={handleInputChange} />
-        <ExperienceList
-          CVdata={CVdata}
-          onAdd={(value) =>
-            handleArrayAdd('experience', {
-              id: crypto.randomUUID(),
-              text: value,
-            })
-          }
-          onRemove={(id) => handleArrayRemove('experience', id)}
-        />
-        <EducationList
-          CVdata={CVdata}
-          onAdd={(object) =>
-            handleArrayAdd('education', {
-              id: crypto.randomUUID(),
-              details: object,
-            })
-          }
-          onRemove={(id) => handleArrayRemove('education', id)}
-        />
-      </form>
+      {/* <form> */}
+      <PersonalInfo CVdata={CVdata} handleInputChange={handleInputChange} />
+      <AboutMe CVdata={CVdata} handleInputChange={handleInputChange} />
+      <ExperienceList
+        CVdata={CVdata}
+        onAdd={(value) =>
+          handleArrayAdd('experience', {
+            id: crypto.randomUUID(),
+            text: value,
+          })
+        }
+        onRemove={(id) => handleArrayRemove('experience', id)}
+      />
+      <EducationList
+        CVdata={CVdata}
+        onAdd={(object) =>
+          handleArrayAdd('education', {
+            id: crypto.randomUUID(),
+            details: object,
+          })
+        }
+        onRemove={(id) => handleArrayRemove('education', id)}
+      />
+      {/* </form> */}
     </div>
   )
 }
