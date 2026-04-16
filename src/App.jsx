@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import PersonalInfo from './components/PersonalInfo'
+import Summary from './components/Summary'
+import ExperienceList from './components/Experience'
 import './App.css'
 
 function App() {
@@ -8,7 +10,7 @@ function App() {
     email: '',
     phone: '',
     summary: '',
-    experience: '',
+    experience: [],
     education: '',
     skills: [],
     projects: [],
@@ -21,9 +23,36 @@ function App() {
     }))
   }
 
+  const handleArrayAdd = (field, value) => {
+    setCVdata((prevData) => ({
+      ...prevData,
+      [field]: [...prevData[field], value],
+    }))
+  }
+
+  const handleArrayRemove = (field, id) => {
+    setCVdata((prevData) => ({
+      ...prevData,
+      [field]: prevData[field].filter((item) => item.id !== id),
+    }))
+  }
+
   return (
     <div>
-      <PersonalInfo CVdata={CVdata} handleInputChange={handleInputChange} />
+      <form>
+        <PersonalInfo CVdata={CVdata} handleInputChange={handleInputChange} />
+        <Summary CVdata={CVdata} handleInputChange={handleInputChange} />
+        <ExperienceList
+          CVdata={CVdata}
+          onAdd={(value) =>
+            handleArrayAdd('experience', {
+              id: crypto.randomUUID(),
+              text: value,
+            })
+          }
+          onRemove={(id) => handleArrayRemove('experience', id)}
+        />
+      </form>
     </div>
   )
 }
