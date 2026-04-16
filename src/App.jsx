@@ -2,6 +2,7 @@ import { useState } from 'react'
 import PersonalInfo from './components/PersonalInfo'
 import Summary from './components/Summary'
 import ExperienceList from './components/Experience'
+import EducationList from './components/Education'
 import './App.css'
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
     phone: '',
     summary: '',
     experience: [],
-    education: '',
+    education: [],
     skills: [],
     projects: [],
   })
@@ -51,6 +52,16 @@ function App() {
             })
           }
           onRemove={(id) => handleArrayRemove('experience', id)}
+        />
+        <EducationList
+          CVdata={CVdata}
+          onAdd={(object) =>
+            handleArrayAdd('education', {
+              id: crypto.randomUUID(),
+              details: object,
+            })
+          }
+          onRemove={(id) => handleArrayRemove('education', id)}
         />
       </form>
     </div>
