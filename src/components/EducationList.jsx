@@ -72,6 +72,9 @@ const EducationList = ({ CVdata, onAdd, onRemove }) => {
           >
             Add
           </button>
+          <button type='button' onClick={() => setIsAdding(false)}>
+            Cancel
+          </button>
         </>
       )}
 
