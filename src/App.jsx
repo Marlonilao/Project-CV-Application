@@ -6,6 +6,8 @@ import EducationList from './components/EducationList'
 import SkillsList from './components/SkillsList'
 import './App.css'
 import LivePreview from './components/LivePreview'
+import '@mantine/core/styles.css'
+import { MantineProvider } from '@mantine/core'
 
 function App() {
   const [CVdata, setCVdata] = useState({
@@ -41,42 +43,44 @@ function App() {
   }
 
   return (
-    <div className='flex'>
-      <div>
-        <PersonalInfo CVdata={CVdata} handleInputChange={handleInputChange} />
-        <AboutMe CVdata={CVdata} handleInputChange={handleInputChange} />
-        <ExperienceList
-          CVdata={CVdata}
-          onAdd={(object) =>
-            handleArrayAdd('experience', {
-              id: crypto.randomUUID(),
-              experienceDetails: object,
-            })
-          }
-          onRemove={(id) => handleArrayRemove('experience', id)}
-        />
-        <EducationList
-          CVdata={CVdata}
-          onAdd={(object) =>
-            handleArrayAdd('education', {
-              id: crypto.randomUUID(),
-              details: object,
-            })
-          }
-          onRemove={(id) => handleArrayRemove('education', id)}
-        />
-        <SkillsList
-          CVdata={CVdata}
-          onAdd={(value) =>
-            handleArrayAdd('skills', { id: crypto.randomUUID(), text: value })
-          }
-          onRemove={(id) => handleArrayRemove('skills', id)}
-        />
+    <MantineProvider>
+      <div className='flex'>
+        <div>
+          <PersonalInfo CVdata={CVdata} handleInputChange={handleInputChange} />
+          <AboutMe CVdata={CVdata} handleInputChange={handleInputChange} />
+          <ExperienceList
+            CVdata={CVdata}
+            onAdd={(object) =>
+              handleArrayAdd('experience', {
+                id: crypto.randomUUID(),
+                experienceDetails: object,
+              })
+            }
+            onRemove={(id) => handleArrayRemove('experience', id)}
+          />
+          <EducationList
+            CVdata={CVdata}
+            onAdd={(object) =>
+              handleArrayAdd('education', {
+                id: crypto.randomUUID(),
+                details: object,
+              })
+            }
+            onRemove={(id) => handleArrayRemove('education', id)}
+          />
+          <SkillsList
+            CVdata={CVdata}
+            onAdd={(value) =>
+              handleArrayAdd('skills', { id: crypto.randomUUID(), text: value })
+            }
+            onRemove={(id) => handleArrayRemove('skills', id)}
+          />
+        </div>
+        <div>
+          <LivePreview CVdata={CVdata} />
+        </div>
       </div>
-      <div>
-        <LivePreview CVdata={CVdata} />
-      </div>
-    </div>
+    </MantineProvider>
   )
 }
 
