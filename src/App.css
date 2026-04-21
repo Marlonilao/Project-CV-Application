@@ -1,6 +1,0 @@
-@import 'tailwindcss';
-@layer base {
-  * {
-    all: revert;
-  }
-}
