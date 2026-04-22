@@ -1,5 +1,15 @@
 import { useState } from 'react'
-import Togglable from './Togglable'
+import {
+  Accordion,
+  List,
+  ActionIcon,
+  Button,
+  TextInput,
+  Flex,
+  Text,
+} from '@mantine/core'
+import { TrashIcon, PlusIcon } from '@phosphor-icons/react'
+import { Space } from '@mantine/core'
 
 const SkillsList = ({ CVdata, onAdd, onRemove }) => {
   const [skill, setSkill] = useState('')
@@ -11,8 +21,8 @@ const SkillsList = ({ CVdata, onAdd, onRemove }) => {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      const skill = skill.trim()
-      if (skill) onAdd(skill)
+      const skillInput = skill.trim()
+      if (skillInput) onAdd(skillInput)
       setSkill('')
       setIsAdding(false)
     } else if (e.key === 'Escape') {
@@ -22,47 +32,57 @@ const SkillsList = ({ CVdata, onAdd, onRemove }) => {
   }
 
   return (
-    <Togglable header='Skills'>
-      <ul>
-        {CVdata.skills.map((sk) => (
-          <li key={sk.id}>
-            <p>
-              {sk.text}{' '}
-              <button type='button' onClick={() => onRemove(sk.id)}>
-                remove
-              </button>
-            </p>
-          </li>
-        ))}
-      </ul>
-
-      {isAdding && (
-        <>
-          <input
-            autoFocus
-            value={skill}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            placeholder='Skill...'
-          />
-          <button
-            type='button'
-            onClick={() => {
-              onAdd(skill)
-              setSkill('')
-            }}
-          >
-            add
-          </button>
-        </>
-      )}
-
-      {!isAdding && (
-        <button type='button' onClick={() => setIsAdding(true)}>
-          + Add skill
-        </button>
-      )}
-    </Togglable>
+    <Accordion.Item value='skills'>
+      <Accordion.Control>Skills</Accordion.Control>
+      <Accordion.Panel>
+        <List listStyleType='disc'>
+          {CVdata.skills.map((skill) => (
+            <List.Item key={skill.id}>
+              <Flex gap='sm' justify={'space-between'} miw={140}>
+                <Text>{skill.text}</Text>
+                <ActionIcon
+                  variant='light'
+                  color='red'
+                  aria-label='remove-icon'
+                  onClick={() => onRemove(skill.id)}
+                >
+                  <TrashIcon style={{ width: '70%', height: '70%' }} />
+                </ActionIcon>
+              </Flex>
+            </List.Item>
+          ))}
+        </List>
+        <Space h='md' />
+        {isAdding ? (
+          <>
+            <TextInput
+              value={skill}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              placeholder='Skill...'
+            />
+            <Space h='sm' />
+            <Button
+              onClick={() => {
+                onAdd(skill)
+                setSkill('')
+              }}
+            >
+              Save
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button
+              leftSection={<PlusIcon size={14} />}
+              onClick={() => setIsAdding(true)}
+            >
+              Add Skill
+            </Button>
+          </>
+        )}
+      </Accordion.Panel>
+    </Accordion.Item>
   )
 }
 
