@@ -7,7 +7,7 @@ import SkillsList from './components/SkillsList'
 import './App.css'
 import LivePreview from './components/LivePreview'
 import '@mantine/core/styles.css'
-import { MantineProvider } from '@mantine/core'
+import { Accordion, MantineProvider } from '@mantine/core'
 
 function App() {
   const [CVdata, setCVdata] = useState({
@@ -44,8 +44,8 @@ function App() {
 
   return (
     <MantineProvider>
-      <div className='flex'>
-        <div>
+      <div className='sidebar'>
+        <Accordion>
           <PersonalInfo CVdata={CVdata} handleInputChange={handleInputChange} />
           <AboutMe CVdata={CVdata} handleInputChange={handleInputChange} />
           <ExperienceList
@@ -75,10 +75,7 @@ function App() {
             }
             onRemove={(id) => handleArrayRemove('skills', id)}
           />
-        </div>
-        <div>
-          <LivePreview CVdata={CVdata} />
-        </div>
+        </Accordion>
       </div>
     </MantineProvider>
   )
