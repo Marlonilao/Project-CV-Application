@@ -1,5 +1,16 @@
 import { useState } from 'react'
-import Togglable from './Togglable'
+import {
+  Accordion,
+  List,
+  ActionIcon,
+  Paper,
+  Button,
+  TextInput,
+  Space,
+  Flex,
+  Box,
+} from '@mantine/core'
+import { TrashIcon, PlusIcon } from '@phosphor-icons/react'
 
 const EducationList = ({ CVdata, onAdd, onRemove }) => {
   const [education, setEducation] = useState({
@@ -17,73 +28,91 @@ const EducationList = ({ CVdata, onAdd, onRemove }) => {
   }
 
   return (
-    <Togglable header='Education'>
-      <ul>
-        {CVdata.education.map((ed) => (
-          <li key={ed.id}>
-            <p>{ed.details.year}</p>
-            <p>{ed.details.school}</p>
-            <p>{ed.details.degree}</p>
-            <p>
-              <button type='button' onClick={() => onRemove(ed.id)}>
-                remove
-              </button>
-            </p>
-          </li>
-        ))}
-      </ul>
-
-      {isAdding && (
-        <>
-          <input
-            autoFocus
-            name='school'
-            value={education.school}
-            onChange={handleInputChange}
-            placeholder='University name...'
-          />
-
-          <input
-            value={education.degree}
-            name='degree'
-            onChange={handleInputChange}
-            placeholder='Degree...'
-          />
-
-          <input
-            value={education.year}
-            name='year'
-            onChange={handleInputChange}
-            placeholder='Start year - End year...'
-          />
-          <button
-            type='button'
-            onClick={() => {
-              if (education.school && education.degree && education.year) {
-                onAdd(education)
-                setEducation({
-                  school: '',
-                  degree: '',
-                  year: '',
-                })
-                setIsAdding(false)
-              }
-            }}
+    <Accordion.Item value='education'>
+      <Accordion.Control>Education</Accordion.Control>
+      <Accordion.Panel>
+        <List listStyleType='none'>
+          {CVdata.education.map((item) => (
+            <List.Item key={item.id}>
+              <Box w={200}>
+                <Paper shadow='xs' p='sm' withBorder>
+                  <Flex gap='sm' justify={'space-between'}>
+                    <List listStyleType='none'>
+                      <List.Item>{item.details.year}</List.Item>
+                      <List.Item>{item.details.school}</List.Item>
+                      <List.Item>{item.details.degree}</List.Item>
+                    </List>
+                    <ActionIcon
+                      variant='light'
+                      color='red'
+                      aria-label='remove-icon'
+                      onClick={() => onRemove(item.id)}
+                    >
+                      <TrashIcon style={{ width: '70%', height: '70%' }} />
+                    </ActionIcon>
+                  </Flex>
+                </Paper>
+              </Box>
+              <Space h='sm' />
+            </List.Item>
+          ))}
+        </List>
+        <Space h='md' />
+        {!isAdding ? (
+          <Button
+            leftSection={<PlusIcon size={14} />}
+            onClick={() => setIsAdding(true)}
           >
-            Add
-          </button>
-          <button type='button' onClick={() => setIsAdding(false)}>
-            Cancel
-          </button>
-        </>
-      )}
-
-      {!isAdding && (
-        <button type='button' onClick={() => setIsAdding(true)}>
-          + Add Education
-        </button>
-      )}
-    </Togglable>
+            Add Education
+          </Button>
+        ) : (
+          <>
+            <TextInput
+              label='School'
+              name='school'
+              value={education.school}
+              onChange={handleInputChange}
+              placeholder='School of Rock!'
+            />
+            <Space h='md' />
+            <TextInput
+              label='Degree'
+              name='degree'
+              value={education.degree}
+              onChange={handleInputChange}
+              placeholder='BS in Computer Science'
+            />
+            <Space h='md' />
+            <TextInput
+              label='School Year'
+              name='year'
+              onChange={handleInputChange}
+              placeholder='19XX - 200X'
+            />
+            <Space h='md' />
+            <div style={{ display: 'flex' }}>
+              <Button
+                onClick={() => {
+                  if (education.school && education.degree && education.year) {
+                    onAdd(education)
+                    setEducation({
+                      school: '',
+                      degree: '',
+                      year: '',
+                    })
+                    setIsAdding(false)
+                  }
+                }}
+              >
+                Save
+              </Button>
+              <Space w='md' />
+              <Button onClick={() => setIsAdding(false)}>Cancel</Button>
+            </div>
+          </>
+        )}
+      </Accordion.Panel>
+    </Accordion.Item>
   )
 }
 
