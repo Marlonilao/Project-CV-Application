@@ -1,5 +1,18 @@
 import { useState } from 'react'
-import Togglable from './Togglable'
+import {
+  Accordion,
+  List,
+  Box,
+  Paper,
+  ActionIcon,
+  Button,
+  TextInput,
+  Space,
+  Flex,
+  Title,
+  Text,
+} from '@mantine/core'
+import { TrashIcon, PlusIcon } from '@phosphor-icons/react'
 
 const emptyDetails = { company: '', jobTitle: '', year: '', description: [] }
 
@@ -41,97 +54,131 @@ const ExperienceList = ({ CVdata, onAdd, onRemove }) => {
   }
 
   return (
-    <Togglable header='Experience'>
-      <ul>
-        {CVdata.experience.map((exp) => (
-          <li key={exp.id}>
-            <em>{exp.experienceDetails.year}</em>
-            {' - '}
-            <strong>{exp.experienceDetails.jobTitle}</strong> at{' '}
-            {exp.experienceDetails.company}
-            <ul>
-              {exp.experienceDetails.description.map((desc) => (
-                <li key={desc.id}>{desc.text}</li>
-              ))}
-            </ul>
-            <button type='button' onClick={() => onRemove(exp.id)}>
-              remove
-            </button>
-          </li>
-        ))}
-      </ul>
-
-      {isAdding && (
-        <div>
-          <input
-            value={experienceDetails.company}
-            name='company'
-            onChange={handleInputChange}
-            placeholder='Company...'
-          />
-          <input
-            value={experienceDetails.jobTitle}
-            name='jobTitle'
-            onChange={handleInputChange}
-            placeholder='Job Title...'
-          />
-          <input
-            value={experienceDetails.year}
-            name='year'
-            onChange={handleInputChange}
-            placeholder='Year...'
-          />
-          <ul>
-            {experienceDetails.description.map((desc) => (
-              <li key={desc.id}>{desc.text}</li>
-            ))}
-          </ul>
-
-          {isAddingDescription ? (
-            <>
-              <input
-                autoFocus
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder='Description...'
-              />
-              <button type='button' onClick={handleAddDescription}>
-                + Add
-              </button>
-              <button
-                type='button'
-                onClick={() => setIsAddingDescription(false)}
+    <Accordion.Item value='experience'>
+      <Accordion.Control>Experience</Accordion.Control>
+      <Accordion.Panel>
+        <List listStyleType='none'>
+          {CVdata.experience.map((exp) => (
+            <List.Item key={exp.id}>
+              <Box w={300}>
+                <Paper shadow='xs' p='sm' withBorder>
+                  <Flex gap='sm' justify={'space-between'}>
+                    <List listStyleType='none'>
+                      <List.Item>{exp.experienceDetails.year}</List.Item>
+                      <List.Item>
+                        {exp.experienceDetails.jobTitle} at{' '}
+                        {exp.experienceDetails.company}
+                      </List.Item>
+                      <List.Item>
+                        <Text fw={700}>Responsibilities</Text>
+                        <List listStyleType='disc'>
+                          {exp.experienceDetails.description.map((item) => (
+                            <List.Item key={item.id}>{item.text}</List.Item>
+                          ))}
+                        </List>
+                      </List.Item>
+                    </List>
+                    <ActionIcon
+                      variant='light'
+                      color='red'
+                      aria-label='remove-icon'
+                      onClick={() => onRemove(exp.id)}
+                    >
+                      <TrashIcon style={{ width: '70%', height: '70%' }} />
+                    </ActionIcon>
+                  </Flex>
+                </Paper>
+              </Box>
+            </List.Item>
+          ))}
+        </List>
+        <Space h='md' />
+        {!isAdding ? (
+          <Button
+            leftSection={<PlusIcon size={14} />}
+            onClick={() => setIsAdding(true)}
+          >
+            Add Experience
+          </Button>
+        ) : (
+          <>
+            <TextInput
+              label='Company'
+              value={experienceDetails.company}
+              name='company'
+              onChange={handleInputChange}
+              placeholder='Company Name'
+            />
+            <Space h='md' />
+            <TextInput
+              label='Job Title'
+              value={experienceDetails.jobTitle}
+              name='jobTitle'
+              onChange={handleInputChange}
+              placeholder='Full Stack Developer'
+            />
+            <Space h='md' />
+            <TextInput
+              label='Year'
+              value={experienceDetails.year}
+              name='year'
+              onChange={handleInputChange}
+              placeholder='20XX - 20XX'
+            />
+            <Space h='md' />
+            <Title order={6}>Responsibilities</Title>
+            {experienceDetails.description.length > 0 ? (
+              <List listStyleType='disc'>
+                {experienceDetails.description.map((item) => (
+                  <List.Item key={item.id}>{item.text}</List.Item>
+                ))}
+              </List>
+            ) : null}
+            {isAddingDescription ? (
+              <>
+                <TextInput
+                  // label='Description'
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder='Description of your responsibility...'
+                />
+                <Space h='md' />
+                <div style={{ display: 'flex' }}>
+                  <Button onClick={handleAddDescription}>Save</Button>
+                  <Space w='md' />
+                  <Button onClick={() => setIsAddingDescription(false)}>
+                    Cancel
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                <Space h='md' />
+                <Button
+                  leftSection={<PlusIcon size={14} />}
+                  onClick={() => setIsAddingDescription(true)}
+                >
+                  Add Description
+                </Button>
+              </>
+            )}
+            <Space h='md' />
+            <div style={{ display: 'flex' }}>
+              <Button onClick={handleAddExperience}>Save Experience</Button>
+              <Space w='md' />
+              <Button
+                onClick={() => {
+                  setIsAdding(false)
+                  setExperienceDetails(emptyDetails)
+                }}
               >
                 Cancel
-              </button>
-            </>
-          ) : (
-            <button type='button' onClick={() => setIsAddingDescription(true)}>
-              + Add Description
-            </button>
-          )}
-
-          <button type='button' onClick={handleAddExperience}>
-            Save Experience
-          </button>
-          <button
-            type='button'
-            onClick={() => {
-              setIsAdding(false)
-              setExperienceDetails(emptyDetails)
-            }}
-          >
-            Cancel
-          </button>
-        </div>
-      )}
-
-      {!isAdding && (
-        <button type='button' onClick={() => setIsAdding(true)}>
-          + Add Experience
-        </button>
-      )}
-    </Togglable>
+              </Button>
+            </div>
+          </>
+        )}
+      </Accordion.Panel>
+    </Accordion.Item>
   )
 }
 
