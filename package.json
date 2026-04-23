@@ -13,6 +13,9 @@
     "@mantine/core": "^9.0.2",
     "@mantine/form": "^9.0.2",
     "@mantine/hooks": "^9.0.2",
+    "@phosphor-icons/react": "^2.1.10",
+    "@tabler/core": "^1.4.0",
+    "@tabler/icons-react": "^3.41.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
