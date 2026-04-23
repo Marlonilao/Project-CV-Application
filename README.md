@@ -1,16 +1,20 @@
-# React + Vite
+# CV Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is part of the React course from [The Odin Project](https://www.theodinproject.com/lessons/react-new-cv-application).
 
-Currently, two official plugins are available:
+## Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+A simple CV (resume) builder application where users can input their personal information, education, and work experience, then generate a formatted CV.
 
-## React Compiler
+This project focuses on practicing core React concepts such as component structure, state management, and props. The app allows users to edit and update their information dynamically.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Technologies Used
 
-## Expanding the ESLint configuration
+- React
+- JavaScript (ES6+)
+- CSS
+- Mantine (UI Library)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Purpose
+
+This project was built as part of my learning journey with The Odin Project to strengthen my understanding of React and frontend development.
