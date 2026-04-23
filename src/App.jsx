@@ -13,6 +13,7 @@ import {
   Grid,
   Center,
   ScrollArea,
+  Title,
 } from '@mantine/core'
 
 function App() {
@@ -53,6 +54,9 @@ function App() {
       <Grid>
         <Grid.Col span={3}>
           <div className='sidebar'>
+            <Center justify='space-between' p='lg' className='sidebarHeader'>
+              <Title order={1}>CV BUILDER</Title>
+            </Center>
             <Accordion>
               <PersonalInfo
                 CVdata={CVdata}
