@@ -4,6 +4,7 @@
   padding: var(--mantine-spacing-md);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   border-right: 1px solid
     light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
 }
@@ -13,4 +14,24 @@
   /* margin-bottom: calc(var(--mantine-spacing-md) * 1.5); */
   border-bottom: 1px solid
     light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #cv-paper,
+  #cv-paper * {
+    visibility: visible;
+  }
+
+  #cv-paper {
+    position: fixed;
+    inset: 0;
+    /* width: 210mm;
+    min-height: 297mm; */
+    margin: auto;
+    box-shadow: none;
+    border: none;
+  }
 }

@@ -29,13 +29,13 @@ const SectionHeading = ({ icon: Icon, label }) => (
 
 const LivePreview = ({ CVdata }) => {
   return (
-    <Center>
+    <Center id='cv-paper'>
       <Paper
         shadow='md'
         p={48}
         withBorder
-        w='210mm'
-        mih='297mm'
+        w='216mm'
+        mih='279mm'
         style={{ fontFamily: 'Georgia, serif' }}
       >
         {/* Header */}
